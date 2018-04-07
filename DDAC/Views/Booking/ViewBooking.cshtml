@@ -1,0 +1,70 @@
+﻿@using System.Web.Configuration
+@using DDAC.Models
+@model List<DDAC.Models.ContainerModel>
+
+
+@*@model DDAC.Models.ContainerModel*@
+@{
+    ViewBag.Title = "ViewBooking";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2><strong>Booking</strong></h2>
+
+<body>
+
+    <div class="container">
+
+        @*<h2> Booking </h2>*@
+
+       
+
+        <table class="table">
+
+            <thead>
+                <tr>
+
+                    <th>Booking ID</th>
+                    <th>Ship Name</th>
+                    <th>Origin</th>
+                    <th>Destination</th>
+                    <th>Departure Date</th>
+                    <th>Arrival Date</th>
+                    <th>Bay used</th>
+                    <th>Customer Name</th>
+                    <th>Customer Contact Number</th>
+
+
+
+                </tr>
+
+            </thead>
+            .
+            @foreach (var b in Model)
+            {
+
+                <tbody>
+                    <tr>
+                        
+
+                        <td>@b.BookModelId</td>
+                        <td>@b.BookModel.schedule.ShipData.ShipName</td>
+                        <td>@b.BookModel.schedule.ShipData.ShipStartingPoint</td>
+                        <td>@b.BookModel.schedule.ShipData.ShipDestination</td>
+                        <td>@b.BookModel.schedule.ShipDepartureDate</td>
+                        <td>@b.BookModel.schedule.ShipArrivalDate</td>
+                        <td>@b.BayUsed</td>
+                        <td>@b.BookModel.customer.customerName</td>
+                        <td>@b.BookModel.customer.contactNum</td>
+
+                    </tr>
+
+                </tbody>
+
+            }
+        </table>
+
+
+    </div>
+
+</body>

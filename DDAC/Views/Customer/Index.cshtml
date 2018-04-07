@@ -1,0 +1,71 @@
+﻿@using System.Web.Configuration
+@using DDAC.Models
+@model List<DDAC.Models.CustomerModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2><strong>Customer List</strong></h2>
+
+<body>
+
+    <div class="container">
+
+        @*<h2> Customer </h2>*@
+
+
+
+        <table class="table">
+
+            <thead>
+                <tr>
+
+                    <th>Name</th>
+                    <th>IC Number</th>
+                    <th>Contact Number</th>
+                    <th>Email</th>
+
+
+                </tr>
+
+            </thead>
+
+            @foreach (var customer in Model)
+            {
+
+                <tbody>
+                    <tr>
+
+                        <td>@customer.customerName</td>
+                        <td>@customer.icNum</td>
+                        <td>@customer.contactNum</td>
+                        <td>@customer.customerEmail</td>
+
+                    </tr>
+
+                </tbody>
+
+            }
+        </table>
+
+
+
+        @*<div class="container">
+
+
+            <input type="button" class="btn btn-info" value="Add Customer" onclick=" location.href='@Url.Action("RegisterCustomer","Customer")' " />
+
+        </div>*@
+
+
+    </div>
+
+
+
+
+
+</body>
+
+

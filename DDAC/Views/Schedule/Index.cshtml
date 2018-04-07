@@ -1,0 +1,70 @@
+﻿@using System.Web.Configuration
+@using DDAC.Models
+@model List<DDAC.Models.Schedule>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2><strong>Schedule List</strong></h2>
+
+<body>
+    
+<div class="container">
+ 
+
+    <table class="table">
+
+        <thead>
+            <tr>
+
+                <th>Origin</th>
+                <th>Destination</th>
+                <th>Ship Departure Date</th>
+                <th>Ship Arrival Date</th>
+                <th>Shipping ID</th>
+                <th>Action Performed</th>
+
+
+            </tr>
+
+        </thead>
+
+        @foreach (var schedule in Model)
+        {
+
+            <tbody>
+            <tr>
+
+                <td>@schedule.OriginalPlace</td>
+                <td>@schedule.DestinationPlace</td>
+                <td>@schedule.ShipDepartureDate</td>
+                <td>@schedule.ShipArrivalDate</td>
+                <td>@schedule.ShipId</td>
+                <td>@Html.ActionLink("Edit", "editSchedule", "Schedule", new { id = schedule.Id, @class = "form-control" }, null)</td>
+
+            </tr>
+                
+            </tbody>
+
+        }
+    </table>
+
+
+        
+    <div class="container">
+          
+           
+        <input type="button" class="btn btn-info" value="Add Schedule" onclick=" location.href='@Url.Action("addSchedule","Schedule")' "/>
+
+    </div>
+
+
+</div>
+
+
+    
+    
+    
+</body>

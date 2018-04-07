@@ -1,0 +1,136 @@
+﻿@model DDAC.ViewModel.BookingViewModel
+
+@{
+    ViewBag.Title = "MakeBooking";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Scripts.Render("~/bundles/jqueryval")
+
+
+<style>
+
+    /*.alert {
+        padding: 20px;
+        background-color: #f44336;
+        color: white;
+        opacity: 1;
+        transition: opacity 0.6s;
+        margin-bottom: 15px;
+    }*/
+</style>
+
+<h3>MakeBooking</h3>
+
+<div class="container-fluid">
+
+    @if (ViewBag.Message != null)
+    {
+        if (ViewBag.Success == "fail")
+        {
+            <div class="alert alert-danger">
+                <span class="closebtn">&times;</span>
+                <strong>@ViewBag.Message</strong>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-success">
+                <span class="closebtn">&times;</span>
+                <strong>@ViewBag.Message</strong>
+            </div>
+
+
+        }
+
+
+    }
+
+    <label>Selected Schedule</label>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Origin</th>
+                <th>Destination</th>
+                <th>Ship Name</th>
+                <th>Ship Departure Date</th>
+                <th>Ship Arrival Date</th>
+                <th>Ship Cargo Size</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Schedule.OriginalPlace</td>
+                <td>@Model.Schedule.DestinationPlace</td>
+                <td>@Model.Schedule.ShipData.ShipName</td>
+                <td>@Model.Schedule.ShipDepartureDate</td>
+                <td>@Model.Schedule.ShipArrivalDate</td>
+                <td>@Model.Schedule.ShipData.RemainingCargoSize</td>
+            </tr>
+
+        </tbody>
+    </table>
+
+
+
+    @using (Html.BeginForm("Book", "Booking", FormMethod.Post))
+    {
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+        @Html.HiddenFor(b => b.Schedule.Id)
+        @Html.HiddenFor(b => b.Schedule.DestinationPlace)
+        @Html.HiddenFor(b => b.Schedule.OriginalPlace)
+        @Html.HiddenFor(b => b.Schedule.ShipArrivalDate)
+        @Html.HiddenFor(b => b.Schedule.ShipDepartureDate)
+        @Html.HiddenFor(b => b.Schedule.ShipData.ShipName)
+        @Html.HiddenFor(b => b.Schedule.ShipData.Id)
+        @Html.HiddenFor(b => b.Schedule.ShipId)
+        @Html.HiddenFor(b => b.Schedule.ShipData.RemainingCargoSize)
+        @Html.HiddenFor(b => b.Schedule.ShipData.CargoSize)
+        @Html.HiddenFor(b => b.Schedule.ShipData.ShipDestination)
+        @Html.HiddenFor(b => b.Schedule.ShipData.ShipStartingPoint)
+
+        <div class="container">
+
+
+            <div class="form-group">
+                @*<div class="col-md-7">*@
+
+                <label> Choose Customer</label>
+
+                @Html.DropDownListFor(b => b.BookModel.customerID, new SelectList(Model.CustomerModels, "Id", "customerName"), "Pick Customer", new { @class = "form-control" })
+                @Html.ValidationMessageFor(b => b.BookModel.customerID, "", new { @class = "text-danger" })
+
+                @*</div>*@
+            </div>
+
+            <div class="form-group">
+
+
+                @Html.LabelFor(s => s.ContainerModel.ContainerName)
+
+                @Html.EditorFor(s => s.ContainerModel.ContainerName, new { htmlAttributes = new { @class = "form-control", placeholder = "Ship Container Name" } })
+                @Html.ValidationMessageFor(s => s.ContainerModel.ContainerName, "", new { @class = "text-danger" })
+
+
+            </div>
+
+            <div class="form-group">
+
+
+                @Html.LabelFor(s => s.ContainerModel.BayUsed)
+
+                @Html.EditorFor(s => s.ContainerModel.BayUsed, new { htmlAttributes = new { @class = "form-control", placeholder = "Bay needed to be used" } })
+
+                @Html.ValidationMessageFor(s => s.ContainerModel.BayUsed, "", new { @class = "text-danger" })
+
+
+            </div>
+        </div>
+
+        <input id="submitBtn" type="submit" class="btn btn-primary" value="Book" />
+
+    }
+
+</div>

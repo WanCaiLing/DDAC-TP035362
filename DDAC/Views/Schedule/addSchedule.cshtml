@@ -1,0 +1,161 @@
+﻿@model DDAC.ViewModel.viewScheduleViewModel
+
+@{
+    ViewBag.Title = "addSchedule";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Scripts.Render("~/bundles/jqueryval")
+<script type="text/javascript" src="/Scripts/bootstrap-datetimepicker.js"></script>
+<link rel="stylesheet" href="/Content/bootstrap-datetimepicker.css" />
+
+<h2>Add Schedule</h2>
+
+
+@using (Html.BeginForm("createSchedule", "Schedule", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="container">
+
+        <div class="row form-group">
+            <div class="col-md-7">
+                @Html.LabelFor(m => m.schedule.OriginalPlace)
+                @Html.DropDownListFor(m => m.schedule.OriginalPlace, new SelectList(Model.shipList, "ShipStartingPoint", "ShipStartingPoint"), "FROM", new { @class = "form-control", @onchange = "FillInDestination()", @id = "starting-schedule" })
+                @Html.ValidationMessageFor(m => m.schedule.OriginalPlace, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+
+        <div class="row form-group">
+            <div class="col-md-7">
+                @Html.LabelFor(m => m.schedule.DestinationPlace)
+                @Html.DropDownListFor(m => m.schedule.DestinationPlace, new SelectList(Enumerable.Empty<SelectListItem>(), "ShipDestination", "ShipDestination"), "TO", new { @class = "form-control", @onchange = "FillInShip()", @id = "Destination-schedule" })
+                @Html.ValidationMessageFor(m => m.schedule.DestinationPlace, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+
+        <div class="row form-group">
+            <div class="col-md-7">
+                @Html.LabelFor(m => m.schedule.ShipData.ShipName)
+                @Html.DropDownListFor(m => m.schedule.ShipId, new SelectList(Enumerable.Empty<SelectListItem>(), "Id", "ShipName"), "SELECT SHIP", new { @class = "form-control", @id = "existShip" })
+                @Html.ValidationMessageFor(m => m.schedule.ShipId, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+
+        <div class="row form-group">
+            <div class="col-md-7">
+                @Html.LabelFor(m => m.schedule.ShipDepartureDate)
+                @Html.TextBoxFor(m => m.schedule.ShipDepartureDate, new { id = "departuredatepick", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.schedule.ShipDepartureDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-md-7">
+                @Html.LabelFor(m => m.schedule.ShipArrivalDate)
+                @Html.TextBoxFor(m => m.schedule.ShipArrivalDate, new { id = "arrivaldatepick", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.schedule.ShipArrivalDate, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+
+
+        <input id="submitBtn" type="submit" class="btn btn-primary" value="Submit" />
+
+    </div>
+
+
+
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+
+        $(function () {
+            $("#departuredatepick").datetimepicker({
+                minDate: new Date()
+
+
+            });
+            $('#arrivaldatepick').datetimepicker({
+
+                useCurrent: false
+
+            });
+
+            $("#departuredatepick").on("dp.change",
+                function (e) {
+                    $('#arrivaldatepick').data("DateTimePicker").minDate(e.date);
+                });
+            $("#arrivaldatepick").on("dp.change",
+                function (e) {
+                    $('#departuredatepick').data("DateTimePicker").maxDate(e.date);
+                });
+        });
+
+        function FillInDestination() {
+            //alert("Hello");
+            var startingPlace = document.getElementById("starting-schedule");
+            var choice = startingPlace.options[startingPlace.selectedIndex].value;
+
+            //alert(choice);
+            $.ajax({
+                url: '@Url.Action("Destination","Schedule")',
+                type: "GET",
+                dataType: "JSON",
+                data: { starting: choice },
+                success: function(des) {
+                    $('#Destination-schedule').html("").append(
+                        $('<option></option>').val('').html("TO"));
+                    $.each(des, function(x, destination) {
+                        $('#Destination-schedule').append(
+                            $('<option></option>').val(destination.ShipDestination).html(destination.ShipDestination));
+                    });
+                }
+            });
+        }
+
+        function FillInShip() {
+
+            //alert("Hello");
+
+            var startingPlace = document.getElementById("starting-schedule");
+            var destinationPlace = document.getElementById("Destination-schedule");
+
+            var startingChoice = startingPlace.options[startingPlace.selectedIndex].value;
+            var destinationChoice = destinationPlace.options[destinationPlace.selectedIndex].value;
+
+            $.ajax({
+
+                url: '@Url.Action("specifyShip","Schedule")',
+                type: "GET",
+                dataType: "JSON",
+                data: { start: startingChoice, destination:destinationChoice },
+                success: function(des) {
+                    $('#existShip').html("").append(
+                        $('<option></option>').val('').html("SELECT SHIP"));
+                    $.each(des, function(x, chooseShip) {
+                        $('#existShip').append(
+                            $('<option></option>').val(chooseShip.Id).html(chooseShip.ShipName));
+                    });
+                }
+
+            });
+
+
+        }
+
+
+    </script>
+
+}
+
+
+

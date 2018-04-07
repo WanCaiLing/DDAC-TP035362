@@ -1,0 +1,69 @@
+﻿@model List<DDAC.Models.Ship>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2><strong>Ship List</strong></h2>
+
+
+<body>
+    
+    <div class="container">
+
+        <h2> Ship </h2>
+
+     
+
+        <table class="table">
+
+            <thead>
+                <tr>
+                    <th>Ship ID</th>
+                    <th>Ship Name</th>
+                    <th>Ship Destination</th>
+                    <th>Ship Starting Point</th>
+                    <th>Cargo Size</th>
+
+
+                </tr>
+
+            </thead>
+
+            @foreach (var ship in Model)
+        {
+
+            <tbody>
+                <tr>
+                    <td>@ship.Id</td>
+                    <td>@ship.ShipName</td>
+                    <td>@ship.ShipStartingPoint</td>
+                    <td>@ship.ShipDestination</td>
+                    <td>@ship.CargoSize</td>
+
+    </tr>
+
+    </tbody>
+
+}
+        </table>
+
+
+        
+        <div class="container">
+          
+           
+            <input type="button" class="btn btn-info" value="Add Ship" onclick=" location.href='@Url.Action("addShip","Ship")' "/>
+
+        </div>
+
+
+    </div>
+
+
+    
+    
+    
+</body>

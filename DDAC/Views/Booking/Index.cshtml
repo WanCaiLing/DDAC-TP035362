@@ -1,0 +1,53 @@
+﻿@model List<DDAC.Models.Schedule>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2><strong>Booking Selection List</strong></h2>
+
+<body>
+<div class="container">
+ 
+
+    <table class="table">
+
+        <thead>
+        <tr>
+
+            <th>Origin</th>
+            <th>Destination</th>
+            <th>Ship Departure Date</th>
+            <th>Ship Arrival Date</th>
+            <th>Shipping ID</th>
+            <th>Action Performed</th>
+
+
+        </tr>
+
+        </thead>
+
+        @foreach (var schedule in Model)
+        {
+
+            <tbody>
+            <tr>
+
+                <td>@schedule.OriginalPlace</td>
+                <td>@schedule.DestinationPlace</td>
+                <td>@schedule.ShipDepartureDate</td>
+                <td>@schedule.ShipArrivalDate</td>
+                <td>@schedule.ShipId</td>
+                <td>@Html.ActionLink("Select", "MakeBooking", "Booking", new { id = schedule.Id, @class = "form-control" }, null)</td>
+
+            </tr>
+                
+            </tbody>
+
+        }
+    </table>
+
+
+</div>
+</body>

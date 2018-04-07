@@ -1,0 +1,81 @@
+﻿@model DDAC.Models.CustomerModel
+
+@{
+    ViewBag.Title = "RegisterCustomer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Scripts.Render("~/bundles/jqueryval")
+<style>
+
+    .alert {
+        padding: 20px;
+        background-color: #f44336;
+        color: white;
+        opacity: 1;
+        transition: opacity 0.6s;
+        margin-bottom: 15px;
+    }
+
+        .alert.success {
+            background-color: #4CAF50;
+        }
+</style>
+
+<h2>RegisterCustomer</h2>
+
+@if (ViewBag.Message != null)
+{
+    if (ViewBag.Success)
+    {
+        <div class="alert success">
+            <span class="closebtn">&times;</span>
+            <strong>@ViewBag.Message</strong>
+        </div>
+    }
+    else
+    {
+        <div class="alert">
+            <span class="closebtn">&times;</span>
+            <strong>@ViewBag.Message</strong>
+        </div>
+    }
+
+}
+
+@using (Html.BeginForm("RegisterCustomer", "Customer", FormMethod.Post))
+{
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" }) 
+
+    <div class="container">
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.customerName)
+            @Html.EditorFor(m => m.customerName, new { htmlAttributes = new { @class = "form-control", placeholder = "Customer Name" } })
+            @Html.ValidationMessageFor(m => m.customerName, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.icNum)
+            @Html.EditorFor(m => m.icNum, new { htmlAttributes = new { @class = "form-control", placeholder = "Customer IC Number" } })
+            @Html.ValidationMessageFor(m => m.icNum, "", new { @class = "text-danger" })
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.contactNum)
+            @Html.EditorFor(m => m.contactNum, new { htmlAttributes = new { @class = "form-control", placeholder = "Customer Contact Number" } })
+            @Html.ValidationMessageFor(m => m.contactNum, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.customerEmail)
+            @Html.EditorFor(m => m.customerEmail, new { htmlAttributes = new { @class = "form-control", placeholder = "Customer Email" } })
+            @Html.ValidationMessageFor(m => m.customerEmail, "", new { @class = "text-danger" })
+        </div>
+
+
+
+    </div>
+    <input id="submitBtn" type="submit" class="btn btn-primary" value="Submit" />
+}
