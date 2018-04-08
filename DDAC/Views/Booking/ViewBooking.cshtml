@@ -24,7 +24,7 @@
             <thead>
                 <tr>
 
-                    <th>Booking ID</th>
+                    @*<th>Booking ID</th>*@
                     <th>Ship Name</th>
                     <th>Origin</th>
                     <th>Destination</th>
@@ -47,7 +47,7 @@
                     <tr>
                         
 
-                        <td>@b.BookModelId</td>
+                        <td hidden>@b.BookModelId</td>
                         <td>@b.BookModel.schedule.ShipData.ShipName</td>
                         <td>@b.BookModel.schedule.ShipData.ShipStartingPoint</td>
                         <td>@b.BookModel.schedule.ShipData.ShipDestination</td>

@@ -81,6 +81,7 @@ namespace DDAC.Models
         public string ConfirmPassword { get; set; }
 
         [Required]
+        [RegularExpression(@"^[a-zA-Z'.\s]{1,40}$", ErrorMessage = "Information format is invalid")]
         [Display(Name = "Agent Name")]
         public string AgentName { get; set; }
 

@@ -76,7 +76,7 @@ namespace DDAC.Controllers
             if (bvm.ContainerModel.BayUsed > bvm.Schedule.ShipData.RemainingCargoSize) //check whether agent input baynumber got exceed the original bay number or not
             {
                 ViewBag.Success = "fail";
-                ViewBag.Message = "Number of Ship Bay is insufficient";
+                ViewBag.Message = "Size of Ship Cargo is insufficient";
                 return View("MakeBooking", booking);
             }
 

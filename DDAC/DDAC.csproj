@@ -302,6 +302,10 @@
     <Compile Include="Migrations\201803230244325_minor_4.Designer.cs">
       <DependentUpon>201803230244325_minor_4.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804071508197_update_validation.cs" />
+    <Compile Include="Migrations\201804071508197_update_validation.Designer.cs">
+      <DependentUpon>201804071508197_update_validation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BookModel.cs" />
@@ -486,6 +490,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803230244325_minor_4.resx">
       <DependentUpon>201803230244325_minor_4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804071508197_update_validation.resx">
+      <DependentUpon>201804071508197_update_validation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
